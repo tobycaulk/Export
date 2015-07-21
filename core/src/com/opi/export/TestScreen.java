@@ -3,9 +3,10 @@ package com.opi.export;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.opi.export.game.Level;
 import com.opi.export.game.Tile;
+import com.opi.export.game.assethandlers.GameAssetHandler;
+import com.opi.export.game.sharedlayers.BackgroundStarLayer;
 import com.opi.export.game.tiles.TileGrass;
 
 public class TestScreen extends Screen {
@@ -18,7 +19,10 @@ public class TestScreen extends Screen {
 	
 	@Override
 	public void initialize() {
-		super.initialize();
+		assetsHandler = new GameAssetHandler();
+		assetsHandler.load(packPath);
+		
+		addLayer(new BackgroundStarLayer());
 		
 		levels = new ArrayList<Level>();
 		
@@ -34,22 +38,6 @@ public class TestScreen extends Screen {
 		level.setTiles(tiles);
 		level.setPosition(level.getCenteredPosition().x, level.getCenteredPosition().y);
 		levels.add(level);
-	}
-
-	@Override
-	public void draw(SpriteBatch batch) {
-		for(int i = 0; i < levels.size(); i++) {
-			Level l = levels.get(i);
-
-			l.draw(batch);
-		}
-	}
-
-	@Override
-	public void tick() {
-		for(int i = 0; i < levels.size(); i++) {
-			levels.get(i).tick();
-		}
 	}
 
 	@Override

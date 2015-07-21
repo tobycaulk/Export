@@ -22,11 +22,9 @@ public class BackgroundStar extends GameSprite implements Tickable {
 	
 	private Level level;
 	private Vector2 velocity;
-	private boolean remove;
 	
-	public BackgroundStar(Level level) {
+	public BackgroundStar() {
 		super(getStarTexture(random.nextInt(MAX_SIZE) + 1));
-		this.level = level;
 
 		setSize(getTexture().getWidth(), getTexture().getHeight());
 		setX(random.nextInt(Export.WIDTH));
@@ -56,10 +54,6 @@ public class BackgroundStar extends GameSprite implements Tickable {
 		if(getY() + getHeight() <= 0) {
 			remove = true;
 		}
-	}
-	
-	public boolean shouldRemove() {
-		return remove;
 	}
 	
 	public Level getLevel() {

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GameSprite extends Sprite implements Tickable {
 
-	private boolean remove;
+	protected boolean remove;
 
 	public GameSprite(Texture texture) {
 		super(texture);

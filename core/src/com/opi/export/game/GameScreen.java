@@ -21,4 +21,8 @@ public class GameScreen extends Screen {
 	@Override
 	public void resize() {
 	}
+
+	@Override
+	public void initialize() {
+	}
 }

@@ -1,16 +1,21 @@
 package com.opi.export;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ObjectLayer implements Tickable, Drawable {
+public abstract class ObjectLayer implements Tickable, Drawable {
 
+	protected List<GameSprite> sprites;
 	
-	
-	@Override
-	public void draw(SpriteBatch batch) {
+	public ObjectLayer() {
+		this.sprites = new ArrayList<GameSprite>();
 	}
 
-	@Override
-	public void tick() {
+	protected void addSprite(GameSprite sprite) {
+		sprites.add(sprite);
+	}
+	
+	protected void removeSprite(GameSprite sprite) {
+		sprites.remove(sprite);
 	}
 }

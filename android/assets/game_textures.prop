@@ -1,0 +1,17 @@
+sheet=game_textures.png^
+size=16^
+grass=0:0^
+grass1=0:1^
+grassLeftTopSpace=1:0^
+grassMiddleLeftSpace=1:1^
+grassBottomLeftSpace=1:2^
+grassMiddleTopSpace=2:0^
+space=2:1^
+grassMiddleBottomSpace=2:2^
+grassRightTopSpace=3:0^
+grassRightMiddleSpace=3:1^
+grassRightBottomSpace=3:2^
+dirt=4:0^
+dirt1=4:1^
+stone=5:0^
+stone1=5:1^

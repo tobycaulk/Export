@@ -3,10 +3,10 @@ package com.opi.export.game.tiles;
 import com.opi.export.game.Level;
 import com.opi.export.game.Tile;
 
-public class TileTest extends Tile {
+public class TileGrass extends Tile {
 
-	public TileTest(Level level) {
-		super(level, Tile.TEST);
+	public TileGrass(Level level) {
+		super(level, level.getScreen().assetsHandler.getTexture("grass"));
 	}
 
 	@Override

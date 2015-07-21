@@ -6,19 +6,20 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.opi.export.game.Level;
 import com.opi.export.game.Tile;
-import com.opi.export.game.tiles.TileTest;
+import com.opi.export.game.tiles.TileGrass;
 
-public class GameScreen extends Screen {
+public class TestScreen extends Screen {
 
 	private List<Level> levels;
-	private int currentLevel;
 	
-	public GameScreen(Export game) {
-		super(game);
+	public TestScreen(Export game) {
+		super(game, "game_assets.pack");
 	}
 	
 	@Override
 	public void initialize() {
+		super.initialize();
+		
 		levels = new ArrayList<Level>();
 		
 		Level level = new Level(this);
@@ -26,11 +27,12 @@ public class GameScreen extends Screen {
 		Tile[][] tiles = new Tile[8][5];
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
-				tiles[x][y] = new TileTest(level);
+				tiles[x][y] = new TileGrass(level);
 			}
 		}
 
 		level.setTiles(tiles);
+		level.setPosition(level.getCenteredPosition().x, level.getCenteredPosition().y);
 		levels.add(level);
 	}
 

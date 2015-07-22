@@ -7,8 +7,6 @@ import com.opi.export.GameSprite;
 import com.opi.export.Tickable;
 
 public abstract class Tile extends GameSprite implements Tickable {
-
-	public static final Texture TEST = new Texture(Gdx.files.internal("testTile.png"));
 	
 	public static final int OG_SIZE = 100;
 	

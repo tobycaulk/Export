@@ -1,6 +1,7 @@
 package com.opi.export;
 
 import com.opi.export.game.sharedlayers.BackgroundStarLayer;
+import com.opi.export.game.sharedlayers.LevelObjectLayer;
 
 public class TestScreen extends Screen {
 
@@ -11,6 +12,7 @@ public class TestScreen extends Screen {
 	@Override
 	public void initialize() {
 		addLayer(new BackgroundStarLayer());
+		addLayer(new LevelObjectLayer());
 	}
 
 	@Override

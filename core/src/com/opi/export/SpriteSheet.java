@@ -21,8 +21,12 @@ public class SpriteSheet {
 		
 		for(String key : ssc.data.keySet()) {
 			String[] data = ssc.data.get(key).split(":");
-			int ID = (Integer.parseInt(data[1]) * textureSize) + (Integer.parseInt(data[0])) + 1;
-			textures.put(key, new SpriteTexture(ID, regions[Integer.parseInt(data[0])][Integer.parseInt(data[1])]));
+			int ty = Integer.parseInt(data[1]);
+			int tx = Integer.parseInt(data[0]);
+			int ID = (ty * textureSize) + (tx) + 1;
+			TextureRegion region = regions[ty][tx];
+			region.flip(false, true);
+			textures.put(key, new SpriteTexture(ID, region));
 		}
 		
 		return textures;

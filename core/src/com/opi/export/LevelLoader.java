@@ -2,22 +2,56 @@ package com.opi.export;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.opi.export.game.Level;
+import com.opi.export.game.Tile;
 
 public class LevelLoader {
 	
-	public static Level[] load(FileHandle path, FileHandle levelPack) {
+	public static Level[] load(FileHandle path, String levelPack) {
 		HashMap<String, String> levelProperties = FileParser.load(path);
-		ArrayList<Level> levels = new ArrayList<Level>();
-		FileHandle levelRootHandle = Gdx.files.internal(levelProperties.get(levelPack));
+		HashMap<String, String> levelTree = FileParser.load(Gdx.files.internal(levelProperties.get(levelPack)));
+		List<Level> levels = new ArrayList<Level>();
 		
-		for(FileHandle levelFile : levelRootHandle.list()) {
-			System.out.println(levelFile.name());
+		for(String key : levelTree.keySet()) {
+			HashMap<String, String> level = FileParser.load(Gdx.files.internal(levelTree.get(key)));
+			Tile[][] tiles = new Tile[Integer.parseInt(level.get("width"))][Integer.parseInt(level.get("height"))];
+			int levelID = Integer.parseInt(level.get("levelID"));
+			String levelLine = level.get("tiles");
+			List<String> tileIDs = new ArrayList<String>();
+
+			for(int i = 0; i < levelLine.length(); i += 4) {
+				tileIDs.add(levelLine.substring(i, Math.min(levelLine.length(), i + 4)));
+			}
+			
+			int x, y;
+			x = y = 0;
+			for(int i = 0; i < tileIDs.size(); i++) {
+				int tileID = Integer.parseInt(tileIDs.get(i));
+				tiles[x][y] = Tile.getTile(tileID);
+				
+				if((i + 1) % tiles.length == 0) {
+					y++;
+					x = 0;
+				} else {
+					x++;
+				}
+			}
+			
+			for(int i = 0; i < tiles.length; i++) {
+				for(int j = 0; j < tiles[0].length / 2; j++) {
+					Tile tmp = tiles[i][j];
+					tiles[i][j] = tiles[i][tiles[i].length - 1 - j];
+					tiles[i][tiles[i].length - 1 - j] = tmp;
+				}
+			}
+			
+			levels.add(new Level(tiles, levelID));
 		}
 		
-		return null;
+		return levels.toArray(new Level[levels.size()]);
 	}
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.opi.export.game.Tile;
 
 public class Export implements ApplicationListener {
 
@@ -26,7 +27,9 @@ public class Export implements ApplicationListener {
 		GameCamera.initialize();
 		viewport = new FitViewport(viewport_width, viewport_height, GameCamera.get());
 		batch = new SpriteBatch();
-		AssetsHandler.load("game_assets.pack");
+		AssetsHandler.loadTextures("game_assets.pack");
+		Tile.initialize();
+		AssetsHandler.loadLevels("game_assets.pack");
 		
 		switchScreen(new TestScreen(this));
 	}

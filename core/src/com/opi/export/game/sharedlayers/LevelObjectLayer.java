@@ -1,24 +1,46 @@
 package com.opi.export.game.sharedlayers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.opi.export.AssetsHandler;
+import com.opi.export.Export;
 import com.opi.export.ObjectLayer;
-import com.opi.export.Screen;
 import com.opi.export.game.Level;
 
 public class LevelObjectLayer extends ObjectLayer {
 
-	private Screen screen;
+	private static final float defaultLevelPosition = (Export.HEIGHT / 4);
+	
 	private Level[] levels;
 	
-	public LevelObjectLayer(Screen screen) {
-		this.screen = screen;
+	public LevelObjectLayer() {
+		this.levels = AssetsHandler.getLevels();
+	
+		initialize();
+	}
+	
+	private void initialize() {
+		for(int i = 0; i < levels.length; i++) {
+			Level l = levels[i];
+			if((i - 1) < 0) {
+				l.setPosition(l.getCenteredPosition().x, defaultLevelPosition);
+			} else {
+				Level lastLevel = levels[i - 1];
+				l.setPosition(l.getCenteredPosition().x, (lastLevel.getY() + lastLevel.getLevelHeight()) + Level.DISTANCE_BETWEEN_LEVELS);
+			}
+		}
 	}
 	
 	@Override
 	public void tick() {
+		for(int i = 0; i < levels.length; i++) {
+			levels[i].tick();
+		}
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		for(int i = 0; i < levels.length; i++) {
+			levels[i].draw(batch);
+		}
 	}
 }

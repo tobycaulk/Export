@@ -4,22 +4,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.opi.export.Drawable;
 import com.opi.export.Export;
-import com.opi.export.Screen;
-import com.opi.export.TestScreen;
 import com.opi.export.Tickable;
 
 public class Level implements Drawable, Tickable {
 	
 	public static final int DISTANCE_BETWEEN_LEVELS = (int) Tile.SIZE * 2;
 	
-	private TestScreen screen;
 	private Tile[][] tiles;
 	private float mx;
 	private float my;
 	
-	public Level(TestScreen screen) {
-		this.screen = screen;
-		
+	public Level(Tile[][] tiles, int levelID) {
+
 		initialize();
 	}
 	
@@ -46,10 +42,6 @@ public class Level implements Drawable, Tickable {
 	public void setPosition(float mx, float my) {
 		this.mx = mx;
 		this.my = my;
-	}
-	
-	public TestScreen getScreen() {
-		return screen;
 	}
 	
 	public void setTiles(Tile[][] tiles) {

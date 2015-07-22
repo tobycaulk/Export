@@ -26,6 +26,7 @@ public class Export implements ApplicationListener {
 		GameCamera.initialize();
 		viewport = new FitViewport(viewport_width, viewport_height, GameCamera.get());
 		batch = new SpriteBatch();
+		AssetsHandler.load("game_assets.pack");
 		
 		switchScreen(new TestScreen(this));
 	}

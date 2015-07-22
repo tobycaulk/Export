@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Screen implements Drawable, Tickable {
 	
-	public AssetsHandler assetsHandler;
+	public static AssetsHandler assetsHandler;
 	
 	protected Export game;
 	protected String packPath;

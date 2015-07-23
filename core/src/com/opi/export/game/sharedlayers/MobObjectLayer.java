@@ -3,6 +3,7 @@ package com.opi.export.game.sharedlayers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.opi.export.AssetsHandler;
+import com.opi.export.InputProxy;
 import com.opi.export.ObjectLayer;
 import com.opi.export.game.Level;
 import com.opi.export.game.Player;

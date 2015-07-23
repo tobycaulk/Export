@@ -1,10 +1,9 @@
-package com.opi.export.game.sharedlayers;
+package com.opi.export;
 
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.opi.export.ObjectLayer;
 
 public class InputProxy {
 	

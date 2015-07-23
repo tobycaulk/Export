@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.opi.export.game.sharedlayers.InputProxy;
 
 public abstract class Screen implements Drawable, Tickable {
 	

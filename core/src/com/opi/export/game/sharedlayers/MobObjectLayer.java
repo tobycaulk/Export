@@ -6,7 +6,6 @@ import com.opi.export.AssetsHandler;
 import com.opi.export.ObjectLayer;
 import com.opi.export.game.Level;
 import com.opi.export.game.Player;
-import com.opi.export.game.Tile;
 
 public class MobObjectLayer extends ObjectLayer {
 
@@ -16,7 +15,7 @@ public class MobObjectLayer extends ObjectLayer {
 	public void initialize() {
 		Level level = AssetsHandler.getLevel(AssetsHandler.getSave().levelID);
 		Vector2 enterTile = AssetsHandler.getLevel(AssetsHandler.getSave().levelID).getEnterPosition();
-		player = new Player(level, level.getX() + (enterTile.x * Tile.SIZE), level.getY() + (enterTile.y * Tile.SIZE));
+		player = new Player(level, level.getTilePosition((int) enterTile.x, (int) enterTile.y), (int) enterTile.x, (int) enterTile.y);
 	}
 	
 	@Override
@@ -30,6 +29,29 @@ public class MobObjectLayer extends ObjectLayer {
 	}
 
 	@Override
-	public void processInput() {
+	public boolean processInput(int event) {
+		switch(event) {
+		case InputProxy.PRESS_W:
+			if(!player.isMoving()) {
+				player.moveToTile((int) player.getTilePosition().x, (int) player.getTilePosition().y + 1);
+			}
+			return true;
+		case InputProxy.PRESS_A:
+			if(!player.isMoving()) {
+				player.moveToTile((int) player.getTilePosition().x - 1, (int) player.getTilePosition().y);
+			}
+			return true;
+		case InputProxy.PRESS_S:
+			if(!player.isMoving()) {
+				player.moveToTile((int) player.getTilePosition().x, (int) player.getTilePosition().y - 1);
+			}
+			return true;
+		case InputProxy.PRESS_D:
+			if(!player.isMoving()) {
+				player.moveToTile((int) player.getTilePosition().x + 1, (int) player.getTilePosition().y);
+			}
+			return true;
+		}
+		return false;
 	}
 }

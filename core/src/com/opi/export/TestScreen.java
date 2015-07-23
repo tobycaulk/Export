@@ -15,6 +15,8 @@ public class TestScreen extends Screen {
 		addLayer(new BackgroundStarLayer());
 		addLayer(new LevelObjectLayer());
 		addLayer(new MobObjectLayer());
+		
+		super.initialize();
 	}
 
 	@Override

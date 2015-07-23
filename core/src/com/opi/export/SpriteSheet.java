@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SpriteSheet {
@@ -25,6 +26,7 @@ public class SpriteSheet {
 			int tx = Integer.parseInt(data[0]);
 			int ID = (ty * textureSize) + (tx) + 1;
 			TextureRegion region = regions[ty][tx];
+			region.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
 			textures.put(key, new SpriteTexture(ID, region));
 		}
 		

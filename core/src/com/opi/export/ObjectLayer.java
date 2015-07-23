@@ -7,5 +7,5 @@ public abstract class ObjectLayer implements Tickable, Drawable {
 	}
 	
 	public abstract void initialize();
-	public abstract void processInput();
+	public abstract boolean processInput(int event);
 }

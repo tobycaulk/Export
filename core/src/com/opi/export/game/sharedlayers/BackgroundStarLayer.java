@@ -43,6 +43,7 @@ public class BackgroundStarLayer extends ObjectLayer {
 	}
 
 	@Override
-	public void processInput() {
+	public boolean processInput(int event) {
+		return false;
 	}
 }

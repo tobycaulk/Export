@@ -33,6 +33,8 @@ public class Export implements ApplicationListener {
 		Tile.initialize();
 		AssetsHandler.loadLevels("game_assets.pack");
 		
+		TweenHandler.initialize();
+		
 		switchScreen(new TestScreen(this));
 	}
  
@@ -50,6 +52,7 @@ public class Export implements ApplicationListener {
 		batch.end();
 		
 		currentScreen.tick();
+		TweenHandler.tick();
 	}
 
 	@Override

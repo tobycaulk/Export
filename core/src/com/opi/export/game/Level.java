@@ -48,6 +48,10 @@ public class Level implements Drawable, Tickable {
 		this.mx = mx;
 		this.my = my;
 	}
+
+	public Tile getTile(int tx, int ty) {
+		return tiles[tx][ty];
+	}
 	
 	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
@@ -71,6 +75,10 @@ public class Level implements Drawable, Tickable {
 	
 	public int getLevelID() {
 		return levelID;
+	}
+
+	public Vector2 getTilePosition(int tx, int ty) {
+		return new Vector2(getX() + (tx * Tile.SIZE), getY() + (ty * Tile.SIZE));
 	}
 	
 	public Vector2 getEnterPosition() {

@@ -11,7 +11,7 @@ public class TileGrassTop extends Tile {
 	}
 	
 	public Vector2 getCollisionOffset() {
-		return new Vector2(0, -56);
+		return new Vector2(0, 10);
 	}
 	
 	public boolean canCollide() {

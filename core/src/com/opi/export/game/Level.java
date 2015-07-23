@@ -14,10 +14,12 @@ public class Level implements Drawable, Tickable {
 	private float mx;
 	private float my;
 	private int levelID;
+	private Vector2 enter;
 	
-	public Level(Tile[][] tiles, int levelID) {
+	public Level(Tile[][] tiles, int levelID, Vector2 enter) {
 		this.tiles = tiles;
 		this.levelID = levelID;
+		this.enter = enter;
 		
 		initialize();
 	}
@@ -69,6 +71,10 @@ public class Level implements Drawable, Tickable {
 	
 	public int getLevelID() {
 		return levelID;
+	}
+	
+	public Vector2 getEnterPosition() {
+		return enter;
 	}
 	
 	public Vector2 getCenteredPosition() {

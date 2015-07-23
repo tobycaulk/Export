@@ -10,6 +10,11 @@ public class AssetsHandler {
 	
 	private static HashMap<String, SpriteTexture> textures;
 	private static Level[] levels;
+	private static Save save;
+
+	public static void loadSave() {
+		save = Save.load();
+	}
 	
 	public static void loadTextures(String packPath) {
 		HashMap<String, String> props = FileParser.load(Gdx.files.internal(packPath));
@@ -20,7 +25,7 @@ public class AssetsHandler {
 	public static void loadLevels(String packPath) {
 		HashMap<String, String> props = FileParser.load(Gdx.files.internal(packPath));
 		
-		levels = LevelLoader.load(Gdx.files.internal(props.get("levels")), props.get("level_pack"));
+		levels = LevelLoader.load(Gdx.files.internal(props.get("levels")), save.level_pack);
 	}
 	
 	public static int getTextureID(String key) {
@@ -51,7 +56,22 @@ public class AssetsHandler {
 		return levels;
 	}
 	
-	public Level getLevel(int levelID) {
-		return levels[levelID];
+	public static Level getLevel(int levelID) {
+		for(Level l : levels) {
+			if(levelID == l.getLevelID()) {
+				
+				return l;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static Save getSave() {
+		if(save == null) {
+			Save.load();
+		}
+		
+		return save;
 	}
 }

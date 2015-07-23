@@ -27,6 +27,8 @@ public class Export implements ApplicationListener {
 		GameCamera.initialize();
 		viewport = new FitViewport(viewport_width, viewport_height, GameCamera.get());
 		batch = new SpriteBatch();
+		
+		AssetsHandler.loadSave();
 		AssetsHandler.loadTextures("game_assets.pack");
 		Tile.initialize();
 		AssetsHandler.loadLevels("game_assets.pack");

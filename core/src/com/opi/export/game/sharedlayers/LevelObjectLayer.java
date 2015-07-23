@@ -12,17 +12,14 @@ public class LevelObjectLayer extends ObjectLayer {
 	
 	private Level[] levels;
 	
-	public LevelObjectLayer() {
+	@Override
+	public void initialize() {
 		this.levels = AssetsHandler.getLevels();
-	
-		initialize();
-	}
-	
-	private void initialize() {
+
 		for(int i = 0; i < levels.length; i++) {
 			Level l = levels[i];
 			if((i - 1) < 0) {
-				l.setPosition(l.getCenteredPosition().x, defaultLevelPosition);
+				l.setPosition(l.getCenteredPosition().x, l.getCenteredPosition().y/*defaultLevelPosition*/);
 			} else {
 				Level lastLevel = levels[i - 1];
 				l.setPosition(l.getCenteredPosition().x, (lastLevel.getY() + lastLevel.getLevelHeight()) + Level.DISTANCE_BETWEEN_LEVELS);
@@ -42,5 +39,9 @@ public class LevelObjectLayer extends ObjectLayer {
 		for(int i = 0; i < levels.length; i++) {
 			levels[i].draw(batch);
 		}
+	}
+
+	@Override
+	public void processInput() {
 	}
 }

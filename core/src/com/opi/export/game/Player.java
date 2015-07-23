@@ -5,7 +5,7 @@ import com.opi.export.Mob;
 
 public class Player extends Mob {
 	
-	public static final int WIDTH = 80;
+	public static final int WIDTH = 128;
 	public static final int HEIGHT = 128;
 
 	public Player(Level level, float x, float y) {

@@ -25,7 +25,6 @@ public class SpriteSheet {
 			int tx = Integer.parseInt(data[0]);
 			int ID = (ty * textureSize) + (tx) + 1;
 			TextureRegion region = regions[ty][tx];
-			region.flip(false, true);
 			textures.put(key, new SpriteTexture(ID, region));
 		}
 		

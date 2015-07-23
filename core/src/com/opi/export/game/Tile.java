@@ -3,6 +3,7 @@ package com.opi.export.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
 import com.opi.export.GameSprite;
 import com.opi.export.SpriteTexture;
 import com.opi.export.Tickable;
@@ -34,6 +35,10 @@ public abstract class Tile extends GameSprite implements Tickable {
 		this.textureID = spriteTexture.ID;
 		
 		setSize(SIZE, SIZE);
+	}
+
+	public Vector2 getCollisionOffset() {
+		return new Vector2(0, 0);
 	}
 	
 	public boolean canCollide() {

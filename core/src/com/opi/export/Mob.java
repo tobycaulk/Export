@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.opi.export.game.Level;
+import com.opi.export.game.Tile;
 
 public abstract class Mob extends GameSprite implements Drawable, Tickable {
 
@@ -65,14 +66,20 @@ public abstract class Mob extends GameSprite implements Drawable, Tickable {
 		return moveToPosition;
 	}
 	
-	public void setMoveToPosition(int tx, int ty) {
+	public void setMoveToPosition(int tx, int ty, float x, float y) {
 		moveToTilePosition.set(tx, ty);
-		moveToPosition = level.getTilePosition(tx, ty);
+		moveToPosition.set(x, y);
 	}
 	
 	public void moveToTile(int tx, int ty) {
-		if(!level.getTile(tx, ty).canCollide()) {
-			setMoveToPosition(tx, ty);
+		if(tx < 0 || ty < 0 || tx >= level.getLevelWidth() || ty >= level.getLevelHeight()) {
+			return;
+		}
+		
+		Tile t = level.getTile(tx, ty);
+		if(!t.canCollide()) {
+			Vector2 moveToPosition = level.getTilePosition(tx, ty);
+			setMoveToPosition(tx, ty, moveToPosition.x, moveToPosition.y);
 			tweenToMovePosition();
 		}
 	}

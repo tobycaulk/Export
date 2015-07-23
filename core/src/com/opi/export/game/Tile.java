@@ -36,6 +36,10 @@ public abstract class Tile extends GameSprite implements Tickable {
 		setSize(SIZE, SIZE);
 	}
 	
+	public boolean canCollide() {
+		return false;
+	}
+	
 	public int getTexureID() {
 		return textureID;
 	}

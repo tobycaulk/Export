@@ -8,4 +8,8 @@ public class TileGrassTop extends Tile {
 	public TileGrassTop() {
 		super(AssetsHandler.getSpriteTexture("grassMiddleTopSpace"));
 	}
+	
+	public boolean canCollide() {
+		return true;
+	}
 }

@@ -18,40 +18,23 @@ public class LevelLoader {
 		
 		for(String key : levelTree.keySet()) {
 			HashMap<String, String> level = FileParser.load(Gdx.files.internal(levelTree.get(key)));
-			Tile[][] tiles = new Tile[Integer.parseInt(level.get("width"))][Integer.parseInt(level.get("height"))];
+			int width = Integer.parseInt(level.get("width"));
+			int height = Integer.parseInt(level.get("height"));
+			Tile[][] tiles = new Tile[width][height];
+			Tile[][] uTiles = new Tile[width][height];
+			Tile[][] aTiles = new Tile[width][height];
 			int levelID = Integer.parseInt(level.get("levelID"));
 			String[] enterTileLine = level.get("enterTile").split(":");
 			Vector2 enterTile = new Vector2(Integer.parseInt(enterTileLine[0]), Integer.parseInt(enterTileLine[1]));
-			String levelLine = level.get("tiles");
-			List<String> tileIDs = new ArrayList<String>();
-				
-			for(int i = 0; i < levelLine.length(); i += 4) {
-				tileIDs.add(levelLine.substring(i, Math.min(levelLine.length(), i + 4)));
-			}
+			String tileLine = level.get("tiles");
+			String uTileLine = level.get("utiles");
+			String aTileLine = level.get("atiles");
 			
-			int x, y;
-			x = y = 0;
-			for(int i = 0; i < tileIDs.size(); i++) {
-				int tileID = Integer.parseInt(tileIDs.get(i));
-				tiles[x][y] = Tile.getTile(tileID);
-				
-				if((i + 1) % tiles.length == 0) {
-					y++;
-					x = 0;
-				} else {
-					x++;
-				}
-			}
+			tiles = parseTileLine(tileLine, tiles);
+			uTiles = parseTileLine(uTileLine, uTiles);
+			aTiles = parseTileLine(aTileLine, aTiles);
 			
-			for(int i = 0; i < tiles.length; i++) {
-				for(int j = 0; j < tiles[0].length / 2; j++) {
-					Tile tmp = tiles[i][j];
-					tiles[i][j] = tiles[i][tiles[i].length - 1 - j];
-					tiles[i][tiles[i].length - 1 - j] = tmp;
-				}
-			}
-			
-			levels.add(new Level(tiles, levelID, enterTile));
+			levels.add(new Level(tiles, uTiles, aTiles, levelID, enterTile));
 		}
 		
 		return levels.toArray(new Level[levels.size()]);
@@ -61,5 +44,52 @@ public class LevelLoader {
 		HashMap<String, String> levelProperties = FileParser.load(path);
 		
 		return load(Gdx.files.internal(levelProperties.get(levelPack)));
+	}
+	
+	private static Tile[][] parseTileLine(String levelLine, Tile[][] tiles) {
+		List<String> tileIDs = new ArrayList<String>();
+		tileIDs = stringToTileList(levelLine, tileIDs);
+		tiles = tilesToArray(tileIDs, tiles);
+		tiles = flipTiles(tiles);
+		
+		return tiles;
+	}
+	
+	private static Tile[][] flipTiles(Tile[][] tiles) {
+		for(int i = 0; i < tiles.length; i++) {
+			for(int j = 0; j < tiles[0].length / 2; j++) {
+				Tile tmp = tiles[i][j];
+				tiles[i][j] = tiles[i][tiles[i].length - 1 - j];
+				tiles[i][tiles[i].length - 1 - j] = tmp;
+			}
+		}
+		
+		return tiles;
+	}
+	
+	private static Tile[][] tilesToArray(List<String> tileIDs, Tile[][] tiles) {
+		int x, y;
+		x = y = 0;
+		for(int i = 0; i < tileIDs.size(); i++) {
+			int tileID = Integer.parseInt(tileIDs.get(i));
+			tiles[x][y] = Tile.getTile(tileID);
+			
+			if((i + 1) % tiles.length == 0) {
+				y++;
+				x = 0;
+			} else {
+				x++;
+			}
+		}
+		
+		return tiles;
+	}
+	
+	private static List<String> stringToTileList(String levelLine, List<String> tileIDs) {
+		for(int i = 0; i < levelLine.length(); i += 4) {
+			tileIDs.add(levelLine.substring(i, Math.min(levelLine.length(), i + 4)));
+		}
+		
+		return tileIDs;
 	}
 }

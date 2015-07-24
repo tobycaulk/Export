@@ -11,13 +11,17 @@ public class Level implements Drawable, Tickable {
 	public static final int DISTANCE_BETWEEN_LEVELS = (int) Tile.SIZE * 2;
 	
 	private Tile[][] tiles;
+	private Tile[][] uTiles;
+	private Tile[][] aTiles;
 	private float mx;
 	private float my;
 	private int levelID;
 	private Vector2 enter;
 	
-	public Level(Tile[][] tiles, int levelID, Vector2 enter) {
+	public Level(Tile[][] tiles, Tile[][] uTiles, Tile[][] aTiles, int levelID, Vector2 enter) {
 		this.tiles = tiles;
+		this.uTiles = uTiles;
+		this.aTiles = aTiles;
 		this.levelID = levelID;
 		this.enter = enter;
 		
@@ -34,12 +38,40 @@ public class Level implements Drawable, Tickable {
 				tiles[x][y].tick();
 			}
 		}
+		
+		for(int x = 0; x < uTiles.length; x++) {
+			for(int y = 0; y < uTiles[0].length; y++) {
+				uTiles[x][y].tick();
+			}
+		}
+		
+		for(int x = 0; x < uTiles.length; x++) {
+			for(int y = 0; y < uTiles[0].length; y++) {
+				aTiles[x][y].tick();
+			}
+		}
 	}
 
 	public void draw(SpriteBatch batch) {
 		for(int x = 0; x < tiles.length; x++) {
 			for(int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y].draw(batch, mx + (x * Tile.SIZE), my + (y * Tile.SIZE));
+			}
+		}
+	}
+	
+	public void drawUnderTiles(SpriteBatch batch) {
+		for(int x = 0; x < uTiles.length; x++) {
+			for(int y = 0; y < uTiles[0].length; y++) {
+				uTiles[x][y].draw(batch, mx + (x * uTiles[x][y].getWidth()), my + (y * uTiles[x][y].getHeight()));
+			}
+		}
+	}
+	
+	public void drawAboveTiles(SpriteBatch batch) {
+		for(int x = 0; x < uTiles.length; x++) {
+			for(int y = 0; y < uTiles[0].length; y++) {
+				aTiles[x][y].draw(batch, mx + (x * aTiles[x][y].getWidth()), my + (y * aTiles[x][y].getHeight()));
 			}
 		}
 	}
@@ -51,6 +83,14 @@ public class Level implements Drawable, Tickable {
 
 	public Tile getTile(int tx, int ty) {
 		return tiles[tx][ty];
+	}
+	
+	public Tile getUnderTile(int tx, int ty) {
+		return uTiles[tx][ty];
+	}
+	
+	public Tile getAboveTile(int tx, int ty) {
+		return aTiles[tx][ty];
 	}
 	
 	public void setTiles(Tile[][] tiles) {
@@ -76,7 +116,7 @@ public class Level implements Drawable, Tickable {
 	public int getLevelID() {
 		return levelID;
 	}
-
+	
 	public Vector2 getTilePosition(int tx, int ty) {
 		return new Vector2(getX() + (tx * Tile.SIZE), getY() + (ty * Tile.SIZE));
 	}

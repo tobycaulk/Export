@@ -79,11 +79,23 @@ public abstract class Mob extends GameSprite implements Drawable, Tickable {
 		}
 		
 		Tile t = level.getTile(tx, ty);
+		Tile uT = level.getUnderTile(tx, ty);
+		Tile aT = level.getAboveTile(tx, ty);
+
 		Vector2 nextMoveToPosition = level.getTilePosition(tx, ty);
 		int diffX = (int) ((int) tx - moveToTilePosition.x);
 		int diffY = (int) ((int) ty - moveToTilePosition.y);
 
-		if(t.canCollide()) {
+		if(uT.canCollide() || aT.canCollide()) {
+			
+			
+			Tile cT = null;
+			
+			if(uT.canCollide()) {
+				cT = uT;
+			} else if(aT.canCollide()) {
+				cT = aT;
+			}
 			
 			if(diffX > 0) {
 				canMoveRight = false;
@@ -101,7 +113,7 @@ public abstract class Mob extends GameSprite implements Drawable, Tickable {
 				canMoveUp = true;
 			}
 		
-			nextMoveToPosition.add(t.getCollisionOffset());
+			nextMoveToPosition.add(cT.getCollisionOffset());
 			setMoveToPosition(tx, ty, nextMoveToPosition.x, nextMoveToPosition.y);
 		} else {
 			if(diffX > 0 && canMoveRight) {

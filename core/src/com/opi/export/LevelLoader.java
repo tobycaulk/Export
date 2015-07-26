@@ -7,6 +7,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
+import com.opi.export.game.Entity;
 import com.opi.export.game.Level;
 import com.opi.export.game.Tile;
 
@@ -21,20 +22,17 @@ public class LevelLoader {
 			int width = Integer.parseInt(level.get("width"));
 			int height = Integer.parseInt(level.get("height"));
 			Tile[][] tiles = new Tile[width][height];
-			Tile[][] uTiles = new Tile[width][height];
-			Tile[][] aTiles = new Tile[width][height];
+			Entity[][] entities = new Entity[width][height];
 			int levelID = Integer.parseInt(level.get("levelID"));
 			String[] enterTileLine = level.get("enterTile").split(":");
 			Vector2 enterTile = new Vector2(Integer.parseInt(enterTileLine[0]), Integer.parseInt(enterTileLine[1]));
 			String tileLine = level.get("tiles");
-			String uTileLine = level.get("utiles");
-			String aTileLine = level.get("atiles");
+			String entityLine = level.get("entities");
 			
 			tiles = parseTileLine(tileLine, tiles);
-			uTiles = parseTileLine(uTileLine, uTiles);
-			aTiles = parseTileLine(aTileLine, aTiles);
+			entities = parseEntityLine(entityLine, entities);
 			
-			levels.add(new Level(tiles, uTiles, aTiles, levelID, enterTile));
+			levels.add(new Level(tiles, entities, levelID, enterTile));
 		}
 		
 		return levels.toArray(new Level[levels.size()]);
@@ -46,25 +44,34 @@ public class LevelLoader {
 		return load(Gdx.files.internal(levelProperties.get(levelPack)));
 	}
 	
+	private static Entity[][] parseEntityLine(String entityLine, Entity[][] entities) {
+		List<String> entityIDs = new ArrayList<String>();
+		entityIDs = stringToList(entityLine, entityIDs);
+		entities = entitiesToArray(entityIDs, entities);
+		entities = (Entity[][]) flipArray(entities);
+		
+		return entities;
+	}
+	
 	private static Tile[][] parseTileLine(String levelLine, Tile[][] tiles) {
 		List<String> tileIDs = new ArrayList<String>();
-		tileIDs = stringToTileList(levelLine, tileIDs);
+		tileIDs = stringToList(levelLine, tileIDs);
 		tiles = tilesToArray(tileIDs, tiles);
-		tiles = flipTiles(tiles);
+		tiles = (Tile[][]) flipArray(tiles);
 		
 		return tiles;
 	}
 	
-	private static Tile[][] flipTiles(Tile[][] tiles) {
-		for(int i = 0; i < tiles.length; i++) {
-			for(int j = 0; j < tiles[0].length / 2; j++) {
-				Tile tmp = tiles[i][j];
-				tiles[i][j] = tiles[i][tiles[i].length - 1 - j];
-				tiles[i][tiles[i].length - 1 - j] = tmp;
+	private static Object[][] flipArray(Object[][] objs) {
+		for(int i = 0; i < objs.length; i++) {
+			for(int j = 0; j < objs[0].length / 2; j++) {
+				Object tmp = objs[i][j];
+				objs[i][j] = objs[i][objs[i].length - 1 - j];
+				objs[i][objs[i].length - 1 - j] = tmp;
 			}
 		}
 		
-		return tiles;
+		return objs;
 	}
 	
 	private static Tile[][] tilesToArray(List<String> tileIDs, Tile[][] tiles) {
@@ -85,11 +92,29 @@ public class LevelLoader {
 		return tiles;
 	}
 	
-	private static List<String> stringToTileList(String levelLine, List<String> tileIDs) {
-		for(int i = 0; i < levelLine.length(); i += 4) {
-			tileIDs.add(levelLine.substring(i, Math.min(levelLine.length(), i + 4)));
+	private static Entity[][] entitiesToArray(List<String> entityIDs, Entity[][] entities) {
+		int x, y;
+		x = y = 0;
+		for(int i = 0; i < entityIDs.size(); i++) {
+			int tileID = Integer.parseInt(entityIDs.get(i));
+			entities[x][y] = Entity.getEntity(tileID);
+			
+			if((i + 1) % entities.length == 0) {
+				y++;
+				x = 0;
+			} else {
+				x++;
+			}
 		}
 		
-		return tileIDs;
+		return entities;
+	}
+	
+	private static List<String> stringToList(String line, List<String> IDs) {
+		for(int i = 0; i < line.length(); i += 4) {
+			IDs.add(line.substring(i, Math.min(line.length(), i + 4)));
+		}
+		
+		return IDs;
 	}
 }

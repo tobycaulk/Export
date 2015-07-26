@@ -1,15 +1,14 @@
 package com.opi.export;
 
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.equations.Linear;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.opi.export.game.Level;
-import com.opi.export.game.Tile;
+
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.equations.Linear;
 
 public abstract class Mob extends GameSprite implements Drawable, Tickable {
 
@@ -18,7 +17,6 @@ public abstract class Mob extends GameSprite implements Drawable, Tickable {
 	private Vector2 moveToTilePosition;
 	private Vector2 tilePosition;
 	private boolean moving;
-	private boolean canMoveUp, canMoveDown, canMoveLeft, canMoveRight;
 	
 	public Mob(TextureRegion texture, Level level, float x, float y, int width, int height, int tx, int ty) {
 		this(texture, level, new Vector2(x, y), width, height, tx, ty);
@@ -31,7 +29,6 @@ public abstract class Mob extends GameSprite implements Drawable, Tickable {
 		this.tilePosition = new Vector2(tx, ty);
 		this.moveToPosition = new Vector2();
 		this.moveToTilePosition = new Vector2();
-		this.canMoveUp = canMoveDown = canMoveLeft = canMoveRight = true;
 		
 		setSize(width, height);
 		setPosition(position.x, position.y);
@@ -78,65 +75,8 @@ public abstract class Mob extends GameSprite implements Drawable, Tickable {
 			return;
 		}
 		
-		Tile t = level.getTile(tx, ty);
-		Tile uT = level.getUnderTile(tx, ty);
-		Tile aT = level.getAboveTile(tx, ty);
-
 		Vector2 nextMoveToPosition = level.getTilePosition(tx, ty);
-		int diffX = (int) ((int) tx - moveToTilePosition.x);
-		int diffY = (int) ((int) ty - moveToTilePosition.y);
-
-		if(uT.canCollide() || aT.canCollide()) {
-			
-			
-			Tile cT = null;
-			
-			if(uT.canCollide()) {
-				cT = uT;
-			} else if(aT.canCollide()) {
-				cT = aT;
-			}
-			
-			if(diffX > 0) {
-				canMoveRight = false;
-				canMoveLeft = true;
-			} else if(diffX < 0) {
-				canMoveLeft = false;
-				canMoveRight = true;
-			}
-			
-			if(diffY > 0) {
-				canMoveUp = false;
-				canMoveDown = true;
-			} else if(diffY < 0) {
-				canMoveDown = false;
-				canMoveUp = true;
-			}
-		
-			nextMoveToPosition.add(cT.getCollisionOffset());
-			setMoveToPosition(tx, ty, nextMoveToPosition.x, nextMoveToPosition.y);
-		} else {
-			if(diffX > 0 && canMoveRight) {
-				setMoveToPosition(tx, ty, nextMoveToPosition.x, nextMoveToPosition.y);
-				canMoveLeft = true;
-			}
-			
-			if(diffX < 0 && canMoveLeft) {
-				setMoveToPosition(tx, ty, nextMoveToPosition.x, nextMoveToPosition.y);
-				canMoveRight = true;
-			}
-			
-			if(diffY > 0 && canMoveUp) {
-				setMoveToPosition(tx, ty, nextMoveToPosition.x, nextMoveToPosition.y);
-				canMoveDown = true;
-			}
-			
-			if(diffY < 0 && canMoveDown) {
-				setMoveToPosition(tx, ty, nextMoveToPosition.x, nextMoveToPosition.y);
-				canMoveUp = true;
-			}
-		}
-
+		setMoveToPosition(tx, ty, nextMoveToPosition.x, nextMoveToPosition.y);
 		tweenToMovePosition();
 	}
 	
@@ -150,5 +90,13 @@ public abstract class Mob extends GameSprite implements Drawable, Tickable {
 	
 	public Level getLevel() {
 		return level;
+	}
+	
+	public float getZIndex() {
+		return getY();
+	}
+	
+	public int compareTo(GameSprite s) {
+		return getZIndex() == s.getZIndex() ? 0 : getZIndex() > s.getZIndex() ? -1 : 1;
 	}
 }

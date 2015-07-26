@@ -3,14 +3,11 @@ package com.opi.export.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.math.Vector2;
 import com.opi.export.GameSprite;
 import com.opi.export.SpriteTexture;
 import com.opi.export.Tickable;
 import com.opi.export.game.tiles.TileDirt;
 import com.opi.export.game.tiles.TileDirtAlt;
-import com.opi.export.game.tiles.TileFenceDown;
-import com.opi.export.game.tiles.TileFenceUp;
 import com.opi.export.game.tiles.TileGrass;
 import com.opi.export.game.tiles.TileGrassAlt;
 import com.opi.export.game.tiles.TileGrassLeft;
@@ -36,14 +33,6 @@ public abstract class Tile extends GameSprite implements Tickable {
 		
 		setSize(SIZE, SIZE);
 	}
-
-	public Vector2 getCollisionOffset() {
-		return new Vector2(0, 0);
-	}
-	
-	public boolean canCollide() {
-		return false;
-	}
 	
 	public int getTexureID() {
 		return textureID;
@@ -61,8 +50,6 @@ public abstract class Tile extends GameSprite implements Tickable {
 		TILE_LIST.add(new TileStone());
 		TILE_LIST.add(new TileStoneAlt());
 		TILE_LIST.add(new TileSpace());
-		TILE_LIST.add(new TileFenceDown());
-		TILE_LIST.add(new TileFenceUp());
 	}
 	
 	public static Tile getTile(int textureID) {
@@ -73,5 +60,14 @@ public abstract class Tile extends GameSprite implements Tickable {
 		}
 		
 		return null;
+	}
+	
+	public float getZIndex() {
+		return -1;
+	}
+	
+	@Override
+	public int compareTo(GameSprite s) {
+		return -1;
 	}
 }

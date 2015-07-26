@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.opi.export.AssetsHandler;
 import com.opi.export.Export;
 import com.opi.export.InputProxy;
+import com.opi.export.MasterDrawer;
 import com.opi.export.ObjectLayer;
 import com.opi.export.game.Level;
 import com.opi.export.game.Player;
@@ -28,6 +29,7 @@ public class LevelObjectLayer extends ObjectLayer {
 				Level lastLevel = levels[i - 1];
 				l.setPosition(l.getCenteredPosition().x, (lastLevel.getY() + lastLevel.getLevelHeight()) + Level.DISTANCE_BETWEEN_LEVELS);
 			}
+			l.initialize();
 		}
 		
 		Level level = AssetsHandler.getLevel(AssetsHandler.getSave().levelID);
@@ -50,15 +52,7 @@ public class LevelObjectLayer extends ObjectLayer {
 			levels[i].draw(batch);
 		}
 		
-		for(int i = 0; i < levels.length; i++) {
-			levels[i].drawUnderTiles(batch);
-		}
-		
-		player.draw(batch);
-		
-		for(int i = 0; i < levels.length; i++) {
-			levels[i].drawAboveTiles(batch);
-		}
+		MasterDrawer.add(player);
 	}
 
 	@Override

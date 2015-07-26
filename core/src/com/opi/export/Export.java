@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.opi.export.game.Entity;
 import com.opi.export.game.Tile;
 
 public class Export implements ApplicationListener {
@@ -27,9 +28,14 @@ public class Export implements ApplicationListener {
 		GameCamera.initialize();
 		viewport = new FitViewport(viewport_width, viewport_height, GameCamera.get());
 		batch = new SpriteBatch();
+		
+		AssetsHandler.loadSave();
 		AssetsHandler.loadTextures("game_assets.pack");
 		Tile.initialize();
+		Entity.initialize();
 		AssetsHandler.loadLevels("game_assets.pack");
+		
+		TweenHandler.initialize();
 		
 		switchScreen(new TestScreen(this));
 	}
@@ -42,12 +48,14 @@ public class Export implements ApplicationListener {
 		GameCamera.tick();
 
 		batch.setProjectionMatrix(GameCamera.get().combined);
+
+		currentScreen.tick();
+		TweenHandler.tick();
 		
 		batch.begin();
 		currentScreen.draw(batch);
+		MasterDrawer.draw(batch);
 		batch.end();
-		
-		currentScreen.tick();
 	}
 
 	@Override

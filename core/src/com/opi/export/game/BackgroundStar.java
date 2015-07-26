@@ -59,4 +59,13 @@ public class BackgroundStar extends GameSprite implements Tickable {
 	public Level getLevel() {
 		return level;
 	}
+	
+	public float getZIndex() {
+		return -2;
+	}
+
+	@Override
+	public int compareTo(GameSprite s) {
+		return -2;
+	}
 }

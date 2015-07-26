@@ -13,6 +13,8 @@ public class TestScreen extends Screen {
 	public void initialize() {
 		addLayer(new BackgroundStarLayer());
 		addLayer(new LevelObjectLayer());
+
+		super.initialize();
 	}
 
 	@Override

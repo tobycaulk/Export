@@ -1,6 +1,5 @@
 package com.opi.export.game;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.opi.export.Export;
 import com.opi.export.Screen;
 
@@ -11,18 +10,12 @@ public class GameScreen extends Screen {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
-	}
-
-	@Override
-	public void tick() {
+	public void initialize() {
+		super.initialize();
 	}
 
 	@Override
 	public void resize() {
 	}
 
-	@Override
-	public void initialize() {
-	}
 }

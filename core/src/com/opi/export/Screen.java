@@ -23,7 +23,10 @@ public abstract class Screen implements Drawable, Tickable {
 	}
 	
 	public abstract void resize();
-	public abstract void initialize();
+	
+	public void initialize() {
+		InputProxy.setLayers(layers);
+	}
 	
 	public void draw(SpriteBatch batch) {
 		for(ObjectLayer ol : layers) {
@@ -32,6 +35,8 @@ public abstract class Screen implements Drawable, Tickable {
 	}
 	
 	public void tick() {
+		InputProxy.tick();
+		
 		for(ObjectLayer ol : layers) {
 			ol.tick();
 		}

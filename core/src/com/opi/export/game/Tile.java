@@ -10,10 +10,8 @@ import com.opi.export.game.tiles.TileDirt;
 import com.opi.export.game.tiles.TileDirtAlt;
 import com.opi.export.game.tiles.TileGrass;
 import com.opi.export.game.tiles.TileGrassAlt;
-import com.opi.export.game.tiles.TileGrassBottom;
 import com.opi.export.game.tiles.TileGrassLeft;
 import com.opi.export.game.tiles.TileGrassRight;
-import com.opi.export.game.tiles.TileGrassTop;
 import com.opi.export.game.tiles.TileSpace;
 import com.opi.export.game.tiles.TileStone;
 import com.opi.export.game.tiles.TileStoneAlt;
@@ -45,8 +43,8 @@ public abstract class Tile extends GameSprite implements Tickable {
 		TILE_LIST.add(new TileGrassAlt());
 		TILE_LIST.add(new TileDirt());
 		TILE_LIST.add(new TileDirtAlt());
-		TILE_LIST.add(new TileGrassBottom());
-		TILE_LIST.add(new TileGrassTop());
+		//TILE_LIST.add(new TileGrassBottom());
+		//TILE_LIST.add(new TileGrassTop());
 		TILE_LIST.add(new TileGrassLeft());
 		TILE_LIST.add(new TileGrassRight());
 		TILE_LIST.add(new TileStone());
@@ -62,5 +60,14 @@ public abstract class Tile extends GameSprite implements Tickable {
 		}
 		
 		return null;
+	}
+	
+	public float getZIndex() {
+		return -1;
+	}
+	
+	@Override
+	public int compareTo(GameSprite s) {
+		return -1;
 	}
 }

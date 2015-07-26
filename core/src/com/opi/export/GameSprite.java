@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
-public class GameSprite extends Sprite implements Tickable {
+public abstract class GameSprite extends Sprite implements Tickable, Comparable<GameSprite> {
 
 	protected boolean remove;
 
@@ -15,10 +16,6 @@ public class GameSprite extends Sprite implements Tickable {
 	
 	public GameSprite(TextureRegion texture) {
 		super(texture);
-	}
-	
-	public void addPosition(float mx, float my) {
-		setPosition(getX() + mx, getY() + my);
 	}
 	
 	@Override
@@ -31,12 +28,30 @@ public class GameSprite extends Sprite implements Tickable {
 		super.draw(batch);
 	}
 	
+	public void addPosition(float mx, float my) {
+		setPosition(getX() + mx, getY() + my);
+	}
+
 	public void setPosition(float x, float y) {
 		setX(x);
 		setY(y);
 	}
 	
+	public Vector2 getPosition() {
+		return new Vector2(getX(), getY());
+	}
+	
+	public void setSize(float w, float h) {
+		super.setSize(w, h);
+	}
+	
+	public Vector2 getSize() {
+		return new Vector2(getWidth(), getHeight());
+	}
+	
 	public boolean shouldRemove() {
 		return remove;
 	}
+
+	public abstract float getZIndex();
 }

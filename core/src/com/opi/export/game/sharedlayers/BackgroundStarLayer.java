@@ -1,5 +1,8 @@
 package com.opi.export.game.sharedlayers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.opi.export.GameSprite;
 import com.opi.export.ObjectLayer;
@@ -8,6 +11,12 @@ import com.opi.export.game.BackgroundStar;
 public class BackgroundStarLayer extends ObjectLayer {
 
 	public static final int MAX_STARS = 100;
+	
+	private List<GameSprite> sprites = new ArrayList<GameSprite>();
+	
+	@Override
+	public void initialize() {
+	}
 	
 	@Override
 	public void tick() {
@@ -21,7 +30,7 @@ public class BackgroundStarLayer extends ObjectLayer {
 			sprite.tick();
 			
 			if(sprite.shouldRemove()) {
-				removeSprite(sprite);
+				sprites.remove(sprite);
 			}
 		}
 	}
@@ -31,5 +40,10 @@ public class BackgroundStarLayer extends ObjectLayer {
 		for(int i = 0; i < sprites.size(); i++) {
 			sprites.get(i).draw(batch);
 		}
+	}
+
+	@Override
+	public boolean processInput(int event) {
+		return false;
 	}
 }
